@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import {cyptoAPI} from "../services/cyptoAPI"
-import {cryptoNewsAPI} from "../services/cryptoNews"
+import {coinNews} from "../services/cryptoNews"
+import styleSlice from "../services/globalstate"
 
-
-export default configureStore({
+export const store = configureStore({
     reducer : {
         [cyptoAPI.reducerPath ] : cyptoAPI.reducer,
-        [cryptoNewsAPI.reducerPath] : cryptoNewsAPI.reducer,
+        [coinNews.reducerPath] : coinNews.reducer,
+        stateopposite : styleSlice,
     }
 });

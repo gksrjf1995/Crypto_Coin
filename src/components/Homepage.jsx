@@ -1,24 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import millify from 'millify';
 import { Typography, Row, Col, Statistic } from 'antd';
 import { Link } from "react-router-dom";
 import { useGetcyptoQuery } from '../services/cyptoAPI';
 import Crytocurrenceies from './Crytocurrenceies';
 import News from "./News";
+import { useSelector, useDispatch } from 'react-redux'
+import {stateopposite} from "../services/globalstate"
+
 
 const { Title } = Typography;
 
 
 const Homepage = () => {
   const {data , isFetching } = useGetcyptoQuery(10);
+  const dispatch = useDispatch();
+
+  const count = useSelector((state)=>state);
   const globalstate = data?.data?.stats;
+  const [checkdevice , setcheckdevice] = useState(); 
+  const {activemenu} = count.stateopposite
+  useEffect(()=>{
+    const handleresize = () => setcheckdevice(window.innerWidth);
+    window.addEventListener('resize',handleresize);
+    handleresize();
+  },[checkdevice]);
+
+  useEffect(()=>{
+    if(checkdevice > 768){
+      console.log()
+      dispatch(stateopposite(false));
+    }else{
+      dispatch(stateopposite(true));
+    }
+  },[checkdevice]);
 
 
   if(isFetching) return "Loading...";
-
+  
   return (
     <>
-      <div style={{ marginLeft: "250px" }}>
+      <div >
         <Title level={2} className={"heading"}>Global Cypto Stats</Title>
         <Row>
           <Col span={12}><Statistic title="Total Cyptoocuurencies" value={globalstate.total} /></Col>
@@ -39,6 +61,7 @@ const Homepage = () => {
         <Title level={2} className="show-more"><Link to="/news">Show more</Link></Title>
       </div>
       <News simplified={"10?"} hidesearch/>
+    
     </>
 
 

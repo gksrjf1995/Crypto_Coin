@@ -12,7 +12,11 @@ const Crytocurrenceies = ({ simplified  , hidesearch  }) => {
   const {data : crytosList , isFetching} = useGetcyptoQuery(count);
   const [cryptoLists , setcryptoLists] = useState(crytosList?.data?.coins);
   const [onchage , setonchange] = useState("");
+
+
   
+
+
   useEffect(()=>{
     
 
@@ -29,11 +33,11 @@ const Crytocurrenceies = ({ simplified  , hidesearch  }) => {
     <div className='search-crypto' >
       {hidesearch === undefined ? <Input placeholder='Search cryptocurrency' onChange={(e)=>setonchange(e.target.value)}/> : "" }
     </div>
-    <div style={{marginLeft :"250px"}}>
+    <div >
       <Row gutter={[32,32]} className="crypto-card-container">
         {cryptoLists?.map((item , index)=>{
-          return <Col xs={24} sm={12} lg={6} className="crypto-card" key={item.id}>
-            <Link to={`/crypto/${item.id}`}>
+          return <Col xs={24} sm={12} lg={6} className="crypto-card" key={Date.now()+index}>
+            <Link to={`/crypto/${item.uuid}`}>
               <Card title={`${item.rank} . ${item.name}`} 
                     extra={<img className='crypto-image' src={item.iconUrl}/>} hoverable>
                     <p>Price {millify(item.price)}</p>

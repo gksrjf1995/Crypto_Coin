@@ -17,8 +17,11 @@ export const cyptoAPI = createApi({
     baseQuery : fetchBaseQuery({baseUrl }),
     endpoints : (builder) => ({ 
         getcypto : builder.query({ query : (count) => createRequest(`/coins?limit=${count}`)}),
+        getdetail : builder.query({ query : ({coins}) => createRequest(`/coin/${coins}`)}),
+        gethistory :  builder.query({ query : ({coins , timePeriod}) => createRequest(`/coin/${coins}/history/?timePeriod=${timePeriod}`)}),
+        getexchange : builder.query({ query : () => createRequest(`/coin/Qwsogvtv82FCd/exchanges`)}),
     }),
 });
 
-export const { useGetcyptoQuery } = cyptoAPI
+export const { useGetcyptoQuery , useGetdetailQuery , useGethistoryQuery  , useGetexchangeQuery} = cyptoAPI
 
